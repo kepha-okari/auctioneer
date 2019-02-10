@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
-# from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
-# from .models import Profile,Image,Comment,Like,Follow
+from .models import Artifact, Comment
 # from .forms import ImagePostForm
 
 from wsgiref.util import FileWrapper
@@ -13,8 +13,10 @@ import os
 
 # Create your views here.
 
-def index():
-	return render(reqest, 'index.html')
+def index(request):
+	posts = Artifact.objects.all()
+
+	return render(request, 'index.html', {"posts":posts})
 
 
 # @login_required(login_url='/accounts/login')

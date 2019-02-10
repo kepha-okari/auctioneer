@@ -1,9 +1,9 @@
 from django.urls import include, path
 # from django.conf.path.static import static
-from . import views
+from . views import index
 
 urlpatterns = [
-    path('index/', views.index, name='main-view'),
-    # path('', include('auctionapp.urls'))
+    path('', index, name='index'),
+    # path('auctionapp/', include('auctionapp.urls'))
 ]
 

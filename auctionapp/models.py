@@ -46,3 +46,22 @@ class Comment(models.Model):
         comments_list = Comment.objects.filter(artifact=artifact_id)
 
         return comments_list
+
+    @classmethod
+    def flag_comment(cls,artifact_id):
+        comment = Comment.objects.get(pk=artifact_id)
+
+        return comment
+
+    # @classmethod
+    # def edit_comment(cls,artifact_id):
+    #     comment = Comment.objects.get(pk=artifact_id)
+    #     comment.update(comment)
+                    
+    #     return comment
+
+    @classmethod
+    def delete_comment(cls,artifact_id):
+        comment = Comment.objects.get(pk=artifact_id)
+                    
+        return comment
