@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+# from django.contrib.auth.models import AbstractUser
 
 # class User(AbstractUser):
 #     name = models.CharField(max_length=100, blank=True, null=True)
@@ -10,7 +10,39 @@ class Artifact(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     description = models.CharField(max_length=100, blank=True, null=True)
     date_posted =  models.DateTimeField(auto_now_add=True, null=True)
+    image = models.ImageField(upload_to = 'photos/', null = True)
     is_sold = models.BooleanField(default=False)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+    class Meta:
+        ordering = ['-date_posted']
+
     def __str__(self):
+    	return self.name
+
+    def save_image(self):
+        self.save()
+
+    def delete_image(self):
+        self.delete()
+
+    @classmethod
+    def get_images(cls):
+        images = Artifact.objects.all()
+        return images
+
+
+class Comment(models.Model):
+    # user = models.ForeignKey(User,on_delete=models.CASCADE)
+    artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE)
+    comment = models.TextField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.name
+
+    @classmethod
+    def get_comments(cls,artifact_id):
+        comments_list = Comment.objects.filter(artifact=artifact_id)
+
+        return comments_list
