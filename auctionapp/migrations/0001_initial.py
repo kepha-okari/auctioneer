@@ -26,12 +26,12 @@ class Migration(migrations.Migration):
                 'ordering': ['-date_posted'],
             },
         ),
-        migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comment', models.TextField(blank=True, max_length=200, null=True)),
-                ('artifact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auctionapp.Artifact')),
-            ],
-        ),
+        # migrations.CreateModel(
+        #     name='Comment',
+        #     fields=[
+        #         # ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+        #         ('comment', models.TextField(blank=True, max_length=200, null=True)),
+        #         ('artifact', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='auctionapp.Artifact')),
+        #     ],
+        # ),
     ]
