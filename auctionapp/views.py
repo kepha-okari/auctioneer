@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponse
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
 from .models import Artifact, Comment
-# from .forms import ImagePostForm
+from .forms import ArtifactPostForm
 
 from wsgiref.util import FileWrapper
 import mimetypes
@@ -14,27 +14,33 @@ import os
 # Create your views here.
 
 def index(request):
+	'''
+    View function to display a form for creating a post to a authenticated user
+    '''
 	posts = Artifact.objects.all()
 
 	return render(request, 'index.html', {"posts":posts})
 
 
+
+
 # @login_required(login_url='/accounts/login')
-# def new_post(request):
-#     '''
-#     View function to display a form for creating a post to a authenticated user
-#     '''
-#     current_user = request.user
+def post_artifact(request):
+    '''
+    View function to display a form for creating a post to a authenticated user
+    '''
+    # current_user = request.user
 
-#     if request.method == 'POST':
+    if request.method == 'POST':
 
-#         form = ImagePostForm(request.POST, request.FILES)
+        name = request.POST['imageName']
+        description = request.POST['description']
+        file_to_upload = request.POST['imageFile']
+        price = request.POST['price']
 
-#         if form.is_valid:
-#             post = form.save(commit=False)
-#             post.user = current_user
-#             post.save()
-#             return redirect(profile)
-#     else:
-#         form = ImagePostForm()
-#     return render(request, 'new-post.html', {"form":form})
+   
+
+        form, created = Artifact.objects.get_or_create(name=name, description=description, image=file_to_upload, price=price)
+        form.save()
+        return redirect(index)
+    return render(request, 'post-artifact.html')
