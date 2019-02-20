@@ -1,9 +1,13 @@
 from django.urls import include, path
-# from django.conf.path.static import static
-from . views import index
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
 
 urlpatterns = [
-    path('', index, name='index'),
-    # path('auctionapp/', include('auctionapp.urls'))
+    path('', views.index, name='index'),
+    path('post/artifact/', views.post_artifact, name='post-image'),
 ]
 
+if settings.DEBUG:
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

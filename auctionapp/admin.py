@@ -3,10 +3,6 @@ from django.contrib import admin
 
 from .models import Artifact, Comment
 
-# admin.site.register(Artifact)
-admin.site.register(Comment)
-
-
 class ArtifactAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -18,3 +14,14 @@ class ArtifactAdmin(admin.ModelAdmin):
     list_filter = ('date_posted',)
     search_fields = ('name',)
 admin.site.register(Artifact, ArtifactAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+	list_display = (
+		'artifact',
+		'date_posted',
+		'comment'
+	)
+	list_filter = ('date_posted',)
+	search_fields = ('artifact','comment')
+admin.site.register(Comment, CommentAdmin)
