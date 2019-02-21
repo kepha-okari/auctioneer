@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
-from .models import Artifact, Comment
+from .models import Artifact, Comment, Bid
 from .forms import ArtifactPostForm
 
 from wsgiref.util import FileWrapper
@@ -55,3 +55,51 @@ def post_artifact(request):
         form.save()
         return redirect(index)
     return render(request, 'post-artifact.html')
+
+
+# def place_bid(request, artifact_id):
+def place_bid(request):
+    '''
+    View function to display a form for placing a bid by an authenticated buyer
+    '''
+    # current_user = request.user
+
+    if request.method == 'POST':
+        price = request.POST['bid_price']
+        # form, created = Bid.objects.get_or_create(bid_price=price, artifact=artifact_id)
+        form, created = Bid.objects.get_or_create(bid_price=price)
+        form.save()
+        return redirect(index)
+    return render(request, 'post-artifact.html')
+
+
+# def send_message(request, *args):
+#  	"""
+# 		Function to haundle messaging
+#  	"""
+#     username = username1
+#     apikey = apikey1
+#     to = user_contact
+#     message = 'Congratulations '+ request.user.username.upper() +'for showing interest on my art work.\n' 'We will be able to tell the highest bid in the next '+ str(when)[:10] + ' at ' + str(when)[11:16]
+
+
+#     gateway = AfricasTalkingGateway(username, apikey)
+
+#     try:
+#         # Thats it, hit send and we'll take care of the rest.
+
+#         results = gateway.sendMessage(to, message)
+
+#         for recipient in results:
+#             # status is either "Success" or "error message"
+#             print('number=%s;status=%s;messageId=%s;cost=%s' % (recipient['number'],
+#                                                                 recipient['status'],
+#                                                                 recipient['messageId'],
+#                                                                 recipient['cost']))
+
+#     except AfricasTalkingGatewayException as e:
+#         print('Encountered an error while sending: %s' % str(e))
+
+
+# def schedule_bid(request, *args):
+# 	pass

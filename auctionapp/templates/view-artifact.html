@@ -1,9 +1,24 @@
+{% load bootstrap4 %}
+{% load static%}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>single image</title>
 </head>
 <body>
-{{artifact.name}}
+
+    <div class="container">
+		{{artifact.name}}
+		<img src="{{artifact.image.url}}" style="height:70%; width:100%; margin-left:0px"class="img-responsive" ><br>
+		 <div class="col-md-8 col-lg-8">
+<!--             <form action="/place/bid/{{artifact.id}}/" method="post">
+ -->            <form action="/place/bid/" method="post">
+                 {% csrf_token %}
+                <input name="bid_price"       type="text" value="Kshs 0.00">
+                <input type="submit" value="Place Bid" name="submit">
+            </form>
+        </div>
+	</div>
+
 </body>
 </html>

@@ -1,4 +1,5 @@
 from django.db import models
+
 # from django.contrib.auth.models import AbstractUser
 
 # class User(AbstractUser):
@@ -12,6 +13,7 @@ class Artifact(models.Model):
     date_posted =  models.DateTimeField(auto_now_add=True, null=True)
     image = models.ImageField(upload_to = 'photos/', null = True)
     price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    auction_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     is_sold = models.BooleanField(default=False)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -49,27 +51,32 @@ class Comment(models.Model):
     def __str__(self):
         return self.artifact.name
 
-    # @classmethod
-    # def get_comments(cls, artifact_id):
-    #     comments_list = cls.objects.filter(artifact=artifact_id)
+    @classmethod
+    def get_comments(cls, artifact_id):
+        comments_list = cls.objects.filter(artifact=artifact_id)
 
-    #     return comments_list
+        return comments_list
 
-    # @classmethod
-    # def flag_comment(cls, artifact_id):
-    #     comment = cls.objects.get(pk=artifact_id)
+    @classmethod
+    def flag_comment(cls, artifact_id):
+        comment = cls.objects.get(pk=artifact_id)
 
-    #     return comment
-
-    # # @classmethod
-    # # def edit_comment(cls,artifact_id):
-    # #     comment = Comment.objects.get(pk=artifact_id)
-    # #     comment.update(comment)
-                    
-    # #     return comment
+        return comment
 
     # @classmethod
-    # def delete_comment(cls, artifact_id):
-    #     comment = cls.objects.get(pk=artifact_id)
+    # def edit_comment(cls,artifact_id):
+    #     comment = Comment.objects.get(pk=artifact_id)
+    #     comment.update(comment)
                     
     #     return comment
+
+    @classmethod
+    def delete_comment(cls, artifact_id):
+        comment = cls.objects.get(pk=artifact_id)
+                    
+        return comment
+class Bid(models.Model):
+    bid_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE, blank=True, null=True)
+    # user = models.ForeignKey(User,on_delete=models.CASCADE)
+
