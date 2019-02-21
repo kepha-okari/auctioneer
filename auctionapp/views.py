@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import Http404, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
 # from django.core.exceptions import ObjectDoesNotExist
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
@@ -21,6 +23,15 @@ def index(request):
 
 	return render(request, 'index.html', {"posts":posts})
 
+
+def view_artifact(request, artifact_id):
+	'''
+		view the details of a single artifact
+	'''
+	# artifact = Artifact.single_artifact(artifact_id)
+	artifact = Artifact.objects.get(id = artifact_id)
+
+	return render(request, 'view-artifact.html', {"artifact":artifact})
 
 
 

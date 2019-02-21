@@ -6,13 +6,14 @@
 <body>
 <h1>Auction</h1>
 
+
 <!-- <h1>{{ question.question_text }}</h1>
  -->
 
  {% block content %}
 <ul>
 {% for post in posts %}
-    <li>{{ post.name }}</li>
+    <li>{{ post.name }} <a href="{% url 'view_artifact' post.id %}">Bid</a></li>
 {% endfor %}
 {% endblock %}
 </ul>

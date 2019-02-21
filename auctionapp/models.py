@@ -30,8 +30,14 @@ class Artifact(models.Model):
 
     @classmethod
     def get_images(cls):
-        images = Artifact.objects.all()
+        images = cls.objects.all()
         return images
+
+    # @classmethod
+    def single_artifact(self, artifact_id):
+        artifact = self.objects.get(id=artifact_id)
+        return artifact
+
 
 
 class Comment(models.Model):
@@ -43,27 +49,27 @@ class Comment(models.Model):
     def __str__(self):
         return self.artifact.name
 
-    @classmethod
-    def get_comments(cls,artifact_id):
-        comments_list = Comment.objects.filter(artifact=artifact_id)
+    # @classmethod
+    # def get_comments(cls, artifact_id):
+    #     comments_list = cls.objects.filter(artifact=artifact_id)
 
-        return comments_list
-
-    @classmethod
-    def flag_comment(cls,artifact_id):
-        comment = Comment.objects.get(pk=artifact_id)
-
-        return comment
+    #     return comments_list
 
     # @classmethod
-    # def edit_comment(cls,artifact_id):
-    #     comment = Comment.objects.get(pk=artifact_id)
-    #     comment.update(comment)
-                    
+    # def flag_comment(cls, artifact_id):
+    #     comment = cls.objects.get(pk=artifact_id)
+
     #     return comment
 
-    @classmethod
-    def delete_comment(cls,artifact_id):
-        comment = Comment.objects.get(pk=artifact_id)
+    # # @classmethod
+    # # def edit_comment(cls,artifact_id):
+    # #     comment = Comment.objects.get(pk=artifact_id)
+    # #     comment.update(comment)
                     
-        return comment
+    # #     return comment
+
+    # @classmethod
+    # def delete_comment(cls, artifact_id):
+    #     comment = cls.objects.get(pk=artifact_id)
+                    
+    #     return comment
