@@ -28,6 +28,15 @@
                 <input type="submit" value="Upload Image" name="submit">
             </form>
         </div>
+        <div class="col-12" style="margin-left:0px">
+            <ul>
+            {% for post in posts %}
+                <li>{{ post.name }} <a href="{% url 'view_artifact' post.id %}">Bid</a></li>
+                      <img src="{{post.image.url}}" style="height:70%; width:100%; margin-left:0px"class="img-responsive" ><br>
+            {% endfor %}
+            
+            </ul>
+        </div>
 
     </div>
 

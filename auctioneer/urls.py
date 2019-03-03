@@ -14,11 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-
+from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.conf.urls.static import static
+from auctionapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+	re_path(r'^logout/$', views.user_logout, name='logout'),
     path('', include('auctionapp.urls')),
 ]

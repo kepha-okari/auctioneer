@@ -1,12 +1,18 @@
 from django.shortcuts import render,redirect
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
-# from django.core.exceptions import ObjectDoesNotExist
-# from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.models import User
+from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
+
+from django.contrib.auth import authenticate, login, logout
+
+
+# from django.contrib.auth.forms import UserCreationForm
+
+from django.contrib.auth.models import User
 from .models import Artifact, Comment, Bid
-from .forms import ArtifactPostForm
+from .forms import ArtifactPostForm, UserForm
 
 from wsgiref.util import FileWrapper
 import mimetypes
@@ -14,14 +20,16 @@ from django.conf import settings
 import os
 
 # Create your views here.
-
+@login_required(login_url='/accounts/login')
 def index(request):
 	'''
     View function to display a form for creating a post to a authenticated user
     '''
+    
 	posts = Artifact.objects.all()
+    # current_user = request.user
 
-	return render(request, 'index.html', {"posts":posts})
+	return render(request, 'index.html', {"posts":posts, "current_user":request.user})
 
 
 def view_artifact(request, artifact_id):
@@ -35,12 +43,62 @@ def view_artifact(request, artifact_id):
 
 
 
+@login_required
+def special(request):
+    return HttpResponse("You are logged in !")
+
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse(index))
+
+
+
+def signup(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email_ = request.POST['emailaddress']
+        password = request.POST['password']
+        user =User.objects.create_user(username, email_, password)
+        user.first_name = username.upper()
+        user.last_name = username
+        user.save()
+        authenticated_user = authenticate(username=username, password=raw_password)
+        login(request, authenticated_user)
+        if authenticated_user is not None:
+            print("We are in buddy!")
+        return redirect(index)
+
+    return render(request, 'registration/signup.html')
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request,user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            print("Someone tried to login and failed.")
+            print("They used username: {} and password: {}".format(username,password))
+            return HttpResponse("Invalid login details given")
+    else:
+        return render(request, 'registration/login.html', {})
+
 # @login_required(login_url='/accounts/login')
 def post_artifact(request):
     '''
     View function to display a form for creating a post to a authenticated user
     '''
     # current_user = request.user
+    posts = Artifact.objects.all()
 
     if request.method == 'POST':
 
@@ -54,7 +112,7 @@ def post_artifact(request):
         form, created = Artifact.objects.get_or_create(name=name, description=description, image=file_to_upload, price=price)
         form.save()
         return redirect(index)
-    return render(request, 'post-artifact.html')
+    return render(request, 'post-artifact.html', {"posts":posts})
 
 
 # def place_bid(request, artifact_id):
