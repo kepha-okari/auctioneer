@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'auctionapp',
+<<<<<<< HEAD
     'bootstrap4'
+=======
+    'bootstrap4',
+    # 'registration'
+>>>>>>> dev
 ]
 
 MIDDLEWARE = [
