@@ -9,13 +9,20 @@
   <body>
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
+        {% if request.user.is_authenticated %}
         <p>{{current_user}}</p>
+        {% endif%}
         <ul class="nav navbar-nav">
           <li><a class="navbar-brand" href="{% url 'index' %}">DJANGO</a></li>
           <li><a class="navbar-link" href="{% url 'index' %}">Admin</a></li>
-          <li><a class="navbar-link" href="{% url 'logout' %}">Register</a></li> 
-          <li><a class="navbar-link" href="">{{current_users}}</a></li> 
-          {% if user.is_authenticated %}
+          {% if user.is_active and request.user.is_authenticated  %}
+            <li><a class="navbar-link" href="{% url 'logout' %}">Home</a></li> 
+          {% else %}
+             <li><a class="navbar-link" href="{% url 'signup' %}">Register</a></li> 
+             <li><a class="navbar-link" href="{% url 'user_login' %}">Login</a></li> 
+          {% endif%}
+
+          {% if user.is_active and request.user.is_authenticated  %}
             <li><a href="{% url 'logout' %}">Logout</a></li>
           {% else %}
           {% endif %}
@@ -23,7 +30,7 @@
       </div>
     </nav>
     <div class="container">
-    {% block body_block %}
+    {% block content %}
     {% endblock %}
     </div>
   </body>

@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -135,4 +136,18 @@ DATABASES['default'].update(db_from_env)
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static","media")
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# # Optional SMTP authentication information for EMAIL_HOST.
+# # EMAIL_USE_TLS = False
+
+# EMAIL_HOST = 'stmp.gmail.com'
+# EMAIL_HOST_USER = 'abc@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
+# DEFAULT_FROM_EMAIL = ''
+# SERVER_EMAIL = 'abc@domain.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True

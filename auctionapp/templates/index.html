@@ -5,21 +5,31 @@
 </head>
 <body>
 <h1>Auction</h1>
+
 {% extends 'base.html' %}
 
-{% load staticfiles %}
+{% load static%}
 
 
+	{% block content %}
 
-	 {% block content %}
-	<div class="col-12" style="margin-left:0px;">
-		<ul>
-		{% for post in posts %}
-		    <li>{{ post.name }} <a href="{% url 'view_artifact' post.id %}">Bid</a></li>
-		          <img src="{{post.image.url}}" style="height:70%; width:100%; margin-left:0px"class="img-responsive" ><br>
-		{% endfor %}
+		<div class="col-12" style="margin-top:10px;">
+			<!-- <h1>Artifacts</h1> -->
+			<ul>
+			{% for post in posts %}
+				<li>
+					<div>
+					    <span style="border-radius: 50%; background-color:pink; opacity:10%; height=40px; width:40px;">{{ post.name }}
+					    	 <a href="{% url 'view_artifact' post.id %}">Bid</a>
+					    </span>
+					 	<img src="{{post.image.url}}"  style="height:70%; width:40%; margin-left:10px;border-radius: 40%;"><br>
+					</div>
+				</li>
+
+			{% endfor %}
+			</ul>
+		</div>
+
 	{% endblock %}
-		</ul>
-	</div>
 </body>
 </html>

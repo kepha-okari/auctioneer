@@ -7,26 +7,27 @@ from django.dispatch import receiver
 class UserProfile(models.Model):
 
     USER_TYPE_CHOICES = (
-        ('a', 'Admin'),
-        ('m', 'Moderator'),
-        ('s', 'Seller'),
-        ('b', 'Buyer'),
+        ('A', 'Admin'),
+        ('M', 'Moderator'),
+        ('S', 'Seller'),
+        ('B', 'Buyer'),
     )
 
-    user = models.OneToOneField(User, unique=True, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, related_name='users',unique=True, on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to = 'profile/', default='profile/default.jpg')
     date_joined =  models.DateTimeField(auto_now_add=True, null=True)
     phone_number = models.CharField(max_length=14, blank=True, null=True)
-    user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES, null=True, default='b')
+    user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES, null=True, default='B')
 
     def __str__(self):
         return self.user.username
     
 
 @receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
+def create_user_profile(sender, **kwargs):
+# def create_user_profile(sender, instance, created, **kwargs):
+    if kwargs['created']:
+        UserProfile.objects.create(user=kwargs['instance'])
 
 post_save.connect(create_user_profile, sender=User)
 
@@ -99,5 +100,5 @@ class Comment(models.Model):
 class Bid(models.Model):
     bid_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE, blank=True, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
+    bidder = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
 

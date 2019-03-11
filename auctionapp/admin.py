@@ -5,6 +5,7 @@ from .models import Artifact, Comment, UserProfile, Bid
 
 class ArtifactAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'name',
         'description',
         'date_posted',
@@ -31,7 +32,7 @@ class BidAdmin(admin.ModelAdmin):
     list_display = (
         'artifact',
         'bid_price',
-        'user'
+        'bidder'
         )
     list_filter = ('bid_price',)
     # search_fields = ('artifact',)

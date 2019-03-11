@@ -8,28 +8,28 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import authenticate, login, logout
 
 
-# from django.contrib.auth.forms import UserCreationForm
+from africastalking.AfricasTalkingGateway import AfricasTalkingGateway, AfricasTalkingGatewayException
+from .config import USERNAME, API_KEY
+
+
 
 from django.contrib.auth.models import User
-from .models import Artifact, Comment, Bid
+from .models import Artifact, Comment, Bid, UserProfile
 from .forms import ArtifactPostForm, UserForm
+from  . import config
 
 from wsgiref.util import FileWrapper
 import mimetypes
 from django.conf import settings
-import os
+import africastalking, os
 
 # Create your views here.
-@login_required(login_url='/accounts/login')
+# @login_required(login_url='/login')
 def index(request):
-	'''
-    View function to display a form for creating a post to a authenticated user
-    '''
     
-	posts = Artifact.objects.all()
-    # current_user = request.user
+    posts = Artifact.objects.all()
 
-	return render(request, 'index.html', {"posts":posts, "current_user":request.user})
+    return render(request, 'index.html', {"posts":posts, "current_user":request.user})
 
 
 def view_artifact(request, artifact_id):
@@ -60,12 +60,12 @@ def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
         email_ = request.POST['emailaddress']
-        password = request.POST['password']
-        user =User.objects.create_user(username, email_, password)
+        password_ = request.POST['password']
+        user =User.objects.create_user(username, email_, password_)
         user.first_name = username.upper()
         user.last_name = username
         user.save()
-        authenticated_user = authenticate(username=username, password=raw_password)
+        authenticated_user = authenticate(username=username, password=password_)
         login(request, authenticated_user)
         if authenticated_user is not None:
             print("We are in buddy!")
@@ -77,8 +77,8 @@ def signup(request):
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
+        password_ = request.POST.get('password')
+        user = authenticate(username=username, password=password_)
         if user:
             if user.is_active:
                 login(request,user)
@@ -107,39 +107,56 @@ def post_artifact(request):
         file_to_upload = request.POST['imageFile']
         price = request.POST['price']
 
-   
+
 
         form, created = Artifact.objects.get_or_create(name=name, description=description, image=file_to_upload, price=price)
         form.save()
+        send_message()
         return redirect(index)
     return render(request, 'post-artifact.html', {"posts":posts})
 
 
-# def place_bid(request, artifact_id):
-def place_bid(request):
+def place_bid(request, artifact_id):
+# def place_bid(request):
     '''
     View function to display a form for placing a bid by an authenticated buyer
     '''
-    # current_user = request.user
-
     if request.method == 'POST':
+        
         price = request.POST['bid_price']
-        # form, created = Bid.objects.get_or_create(bid_price=price, artifact=artifact_id)
-        form, created = Bid.objects.get_or_create(bid_price=price)
+
+        image = Artifact.objects.get(id = artifact_id)
+
+        form, created = Bid.objects.get_or_create(bid_price = price, artifact = image, bidder = request.user)
+        
         form.save()
+       
         return redirect(index)
     return render(request, 'post-artifact.html')
 
 
-# def send_message(request, *args):
-#  	"""
-# 		Function to haundle messaging
-#  	"""
-#     username = username1
-#     apikey = apikey1
-#     to = user_contact
-#     message = 'Congratulations '+ request.user.username.upper() +'for showing interest on my art work.\n' 'We will be able to tell the highest bid in the next '+ str(when)[:10] + ' at ' + str(when)[11:16]
+def send_message(request, **args):
+    username = config.USERNAME
+    
+    api_key = config.API_KEY
+    
+    message = "You posted"
+   
+    africastalking.initialize(username, api_key)
+    
+    sms = africastalking.sms
+   
+    response = sms.send(message, '0707630747')
 
+
+# def send_message_v1(request, format=None):
+#         # send confirmation message to the user
+#     username = USERNAME
+
+#     apikey = API_KEY
+
+#     to = '+254707630747'
+#     message = ' Hello Bidder'
 
 #     gateway = AfricasTalkingGateway(username, apikey)
 
@@ -158,6 +175,4 @@ def place_bid(request):
 #     except AfricasTalkingGatewayException as e:
 #         print('Encountered an error while sending: %s' % str(e))
 
-
-# def schedule_bid(request, *args):
-# 	pass
+#     return redirect('index')
