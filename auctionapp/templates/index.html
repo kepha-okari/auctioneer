@@ -23,7 +23,9 @@
 						<figure></figure>
 				</div>
 
-			
+				<div class="bg-text">CRAFTSMAN KENYA
+					<!-- <button type="button" class="btn btn-success more" style="width:2cm;">More</button> -->
+				</div>
 					
 			<style>
 				.crossfade > figure {
@@ -75,6 +77,24 @@
 						100% {
 						opacity: 0
 						}
+					}
+
+					/* Position text in the middle of the page/image */
+					.bg-text {
+						background-color: rgb(0,0,0); /* Fallback color */
+						background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+						color: white;
+						font-weight: bold;
+						font-size: 40px;
+						border: 10px solid #0cfffb;
+						position: absolute; 
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						z-index: 2;
+						width: 400px;
+						padding: 20px;
+						text-align: center;
 					}
 			</style>
 
@@ -138,6 +158,18 @@
 			/* font-size: 25px; */
 			/* font-weight: bold; */
 			border-radius: 20px;
+			color: white;
+			padding: 16px 20px;
+			border: none;
+			cursor: pointer;
+			/* width: 100%; */
+			opacity: 0.9;
+			}
+
+		.more {
+			background-color:#0cfffb;
+			/* font-size: 25px; */
+			/* font-weight: bold; */
 			color: white;
 			padding: 16px 20px;
 			border: none;
