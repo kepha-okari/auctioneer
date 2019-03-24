@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'auctionapp',
     'bootstrap4',
+    'django_extensions',   
     # 'registration'
 ]
 

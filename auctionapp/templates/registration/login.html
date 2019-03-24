@@ -1,17 +1,101 @@
+
 {% extends 'base.html' %}
-{% load staticfiles %}
-{% block body_block %}
-  <div class="container">
-    <div class="jumbotron">
-      <h1>Login here :</h1>
-<form method="post" action="{% url 'user_login' %}">
-          {% csrf_token %}
-          <label for="username">Username:</label>
-          <input type="text" name="username" placeholder="Username">
-<label for="password">Password:</label>
-          <input type="password" name="password" placeholder="Password">
-<input type="submit" name="" value="Login">
-</form>
-</div>
-  </div>
-{% endblock %}
+{% load static %}
+{% load bootstrap4 %}
+{% block  content %}
+    <div class="col-md-3"></div>
+    <div class="bg-img col-md-8">
+        <form method="post" action="{% url 'login' %}" class="login_form" >
+            {% csrf_token %}
+          
+          <center><h1>Login</h1></center>
+      
+          <label for="username"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" name="username" class="username" required>
+      
+          <label for="password"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="password" class="password" required>
+      
+          <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+      
+      <style>
+        body, html {
+        height: 100%;
+        background-color:transparent;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+        form {
+          width: 50%; 
+          background-image: url("ladyphone.jpg");
+        }
+
+        .bg-img {
+          /* The image used */
+          background-image: url("{% static 'media/ladyphone.jpg' %}");
+          
+
+          /* Control the height of the image */
+          min-height: 50%vh;
+
+
+          /* Center and scale the image nicely */
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          position: relative;
+        }
+
+        /* Add styles to the form container */
+        .login_form {
+          position: absolute;
+          margin: 20px;
+          padding: 16px;
+          border-color:rgb(12, 255, 251);
+        
+        }
+
+        /* Full-width input fields */
+          input[type=text], input[type=password] {
+          width: 100%;
+          padding: 15px;
+          margin: 5px 0 22px 0;
+          border: none;
+          background: #f1f1f1;
+        }
+        /*set the input fields*/
+        input[type=text]:focus, input[type=password]:focus {
+          background-color: #ddd;
+          border-radius:20px;
+          outline: none;
+        }
+        .username, .password, .search {
+          border-radius:20px;
+        }
+    
+
+        /* Set a style for the submit button */
+        .btn {
+          background-color:#0cfffb;
+          /* font-size: 25px; */
+          /* font-weight: bold; */
+          border-radius: 20px;
+          color: white;
+          padding: 16px 20px;
+          border: none;
+          cursor: pointer;
+          width: 100%;
+          opacity: 0.9;
+        }
+
+        .btn:hover {
+          opacity: 1;
+        }
+      </style>
+    {% endblock %}
+
+

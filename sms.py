@@ -105,3 +105,20 @@
 
 #     except AfricasTalkingGatewayException as e:
 #         print('Encountered an error while sending: %s' % str(e))
+
+
+
+
+
+# def send_message(request, **args):
+#     username = config.USERNAME
+    
+#     api_key = config.API_KEY
+    
+#     message = "You posted"
+   
+#     africastalking.initialize(username, api_key)
+    
+#     sms = africastalking.sms
+   
+#     response = sms.send(message, '0707630747')

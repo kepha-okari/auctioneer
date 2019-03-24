@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Auctioneer</title>
+	<title>CraftsmanKE</title>
 </head>
 <body>
 
@@ -15,10 +15,7 @@
 	{% block content %}
 
 	    <!-- slidesho images that cover entire screen -->
-		<div class="col-12" style="height:100vh;">
 
-
-		</div>
 
 
 		{% if categories %}
@@ -44,9 +41,10 @@
 					<div col-md-6>
 					    <span style="background-color:pink; opacity:10%; height=40px; width:40;">
 					    	{{ post.name }}
-							<a href="{% url 'view_artifact' post.id %}">
-					    		<button type="button" class="btn btn-success">Bid</button>
-					    	</a>
+
+					    	<button type="button" class="btn btn-success">
+					    		<a href="{% url 'view_artifact' post.id %}">Bid</a>
+					    	</button>
 					    	 
 					    </span>
 					 	<img src="{{post.image.url}}"  style="height:200px; width:400px; margin-left:10px;border-radius: 10%; margin:20px;"><br>
@@ -62,26 +60,26 @@
 		</div>
 
 	{% endblock %}
+
+
 	<style>
-	/* Set a style for the submit button */
-	.btn {
-			background-color:#0cfffb;
-			/* font-size: 25px; */
-			/* font-weight: bold; */
-			border-radius: 20px;
-			color: white;
-			padding: 16px 20px;
-			border: none;
-			cursor: pointer;
-			width: 100%;
-			opacity: 0.9;
-			}
-
-			.btn:hover {
-			opacity: 1;
-			}
-	</style>
-
-	
+			/* Set a style for the submit button */
+			.btn {
+					background-color:#0cfffb;
+					/* font-size: 25px; */
+					/* font-weight: bold; */
+					border-radius: 20px;
+					color: white;
+					padding: 16px 20px;
+					border: none;
+					cursor: pointer;
+					width: 100%;
+					opacity: 0.9;
+					}
+		
+					.btn:hover {
+					opacity: 1;
+					}
+			</style>
 </body>
 </html>

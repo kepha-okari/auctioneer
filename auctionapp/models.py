@@ -33,6 +33,25 @@ post_save.connect(create_user_profile, sender=User)
 
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=20, blank=True, null=True)
+   
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+    
+    def __str__(self):
+        return self.name
+    
+    
+    @classmethod
+    def get_categories(cls):
+        categories = Category.objects.all()
+        return categories
+
+
+
+
 class Artifact(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     description = models.CharField(max_length=100, blank=True, null=True)
@@ -42,6 +61,7 @@ class Artifact(models.Model):
     auction_price = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     is_sold = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
 
 
     class Meta:
@@ -61,16 +81,25 @@ class Artifact(models.Model):
         images = cls.objects.all()
         return images
 
-    # @classmethod
-    def single_artifact(self, artifact_id):
-        artifact = self.objects.get(id=artifact_id)
+    @classmethod
+    def get_images_by_category(cls, category_id):
+        images = cls.objects.filter(category = category_id)
+        return images
+
+    @classmethod
+    def single_artifact(cls, artifact_id):
+        artifact = cls.objects.get(id=artifact_id)
         return artifact
 
+    @classmethod
+    def search_by_name(cls,search_term):
+        query = cls.objects.filter(name__icontains=search_term)
+        return query
 
 
 class Comment(models.Model):
-    # user = models.ForeignKey(User,on_delete=models.CASCADE)
-    artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE)
+    posted_by = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
+    artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE, blank=True, null=True)
     date_posted =  models.DateTimeField(auto_now_add=True, null=True)
     comment = models.TextField(max_length=200, blank=True, null=True)
     is_flagged = models.BooleanField(default=False)
@@ -102,3 +131,22 @@ class Bid(models.Model):
     artifact = models.ForeignKey(Artifact,on_delete=models.CASCADE, blank=True, null=True)
     bidder = models.ForeignKey(User,on_delete=models.CASCADE, blank=True, null=True)
 
+
+
+# testing the abstract concepts and saving
+class ContactInfo(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    address = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    
+    class Meta:
+        abstract = True
+
+class Customer(ContactInfo):
+    purchase_history = models.CharField(max_length=10, blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
+
+class Staff(ContactInfo):
+    bio = models.TextField()
+    position = models.CharField(max_length=20)
