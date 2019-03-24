@@ -9,80 +9,96 @@
 
     <div class="container">
 
-                <div class="container_image">
-                    <img src="{{artifact.image.url}}" alt="{{artifact.name}}" class="image">
-                    <div class="middle">
-                        <div class="text">John Doe</div>
-                    </div>
+        <div class="container_image">
+            <img src="{{artifact.image.url}}" alt="{{artifact.name}}" class="image" style="height:500px; width:800px; margin:10px">
+            <div class="middle">
+                <div class="text">
+                    <form action="/place/bid/{{artifact.id}}/" method="post">
+                        {% csrf_token %}
+                        <input name="bid_price" type="text" placeholder="Kshs">
+                        <input type="submit" value="Place Bid" name="submit"  class="btn btn-success">
+                    </form>
                 </div>
-
-                
-
+            </div>
+        </div>
                 
 
     <!--             
-        <img src="{{artifact.image.url}}" style="height:500px; width:800px; margin:10px" class="img-responsive" ><br>
 
             <form action="/comment/{{artifact.id}}/" method="post">
                 {% csrf_token %}
                 <input name="comment" type="text" placeholder="write your thought here">
                 <input type="submit" value="Comment" name="submit"  class="btn btn-success">
             </form>
-  
 
-		<div class="col-md-4 col-lg-4">
-            <form action="/place/bid/{{artifact.id}}/" method="post">
-                {% csrf_token %}
-                <input name="bid_price" type="text" placeholder="Kshs">
-                <input type="submit" value="Place Bid" name="submit"  class="btn btn-success">
-            </form>
-        </div> 
     -->
 
     </div>
     <style>
 
-    .container_image {
-        position: relative;
-        width: 50%;
-        height: 25%;
-        /* float: left; */
-      }
-      
-      .image {
-        opacity: 1;
-        display: block;
-        width: 100%;
-        height: 50%;
-        transition: .5s ease;
-        backface-visibility: hidden;
-      }
-      
-      .middle {
-        transition: .5s ease;
-        opacity: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        text-align: center;
-      }
-      
-      .container_image:hover .image {
-        opacity: 0.3;
-      }
-      
-      .container_image:hover .middle {
-        opacity: 1;
-      }
-      
-      .text {
-        background-color: #4CAF50;
-        color: white;
-        font-size: 16px;
-        padding: 16px 32px;
-      }
+        .container_image {
+          position: relative;
+          width: 50%;
+        }
+
+        .image {
+          opacity: 1;
+          display: block;
+          width: 100%;
+          height: auto;
+          transition: .5s ease;
+          backface-visibility: hidden;
+        }
+
+        .middle {
+          transition: .5s ease;
+          opacity: 0;
+          position: absolute;
+          top: 50%;
+          left: 45%;
+          transform: translate(-50%, -50%);
+          -ms-transform: translate(-50%, -50%);
+          text-align: center;
+        }
+
+        .container_image:hover .image {
+          opacity: 0.3;
+        }
+
+        .container_image:hover .middle {
+          opacity: 1;
+        }
+
+        .text {
+          /* background-color: #4CAF50; */
+          color: white;
+          font-size: 16px;
+          padding: 16px 32px;
+        }
+
+        input[type=text], bid_price  {
+            width: 70%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border-color: #0cfffb;
+            border-radius:5%;
+            background: #ffff
+        }
+
+        .btn {
+          background-color:#0cfffb;
+          border-radius: 20px;
+          color: white;
+          padding: 15px 15px;
+          border: none;
+          cursor: pointer;
+          width: 70%;
+          opacity: 0.9;
+        }
+
+        .btn:hover {
+          opacity: 1;
+        }
       </style>
     
 </body>
