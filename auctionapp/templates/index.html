@@ -16,8 +16,9 @@
 
 	    <!-- slidesho images that cover entire screen -->
 		<div class="col-12" style="height:100vh;">
+			{% for post in posts %}
 
-
+			{% endfor %}
 		</div>
 
 
@@ -38,22 +39,36 @@
 		{% endif %}
 
 		<div class="col-12" style="margin-top:10px;">
+			<div class="col-md-6"></div>
 			<ul>
+				<p>{{posts|length}}</p>
+			
 			{% for post in posts %}
 				<li>
 					<div col-md-6>
 					    <span style="background-color:pink; opacity:10%; height=40px; width:40;">
-					    	{{ post.name }}
-							<a href="{% url 'view_artifact' post.id %}">
-					    		<button type="button" class="btn btn-success">Bid</button>
-					    	</a>
+							
+						
+							<div class="col-md-6">
+								<p>{{ post.name }}</p>
+								<a href="{% url 'view_artifact' post.id %}">
+										<button type="button" class="btn btn-success " style="width:2cm;">Bid</button>
+								</a>
+							</div>
+
+							<div class="col-md-6">
+								<a href="{% url 'view_artifact' post.id %}">
+										<img src="{{post.image.url}}"  style="height:200px; width:400px; margin-left:10px;border-radius: 10%; margin:20px;"><br>
+									</a>
+							</div>
+			
 					    	 
 					    </span>
-					 	<img src="{{post.image.url}}"  style="height:200px; width:400px; margin-left:10px;border-radius: 10%; margin:20px;"><br>
 					</div>
 				</li>
 
 				<div style="background-image: url('{{post.image.url}}')">
+
 						<p>home</p>
 						</div>
 
@@ -73,13 +88,16 @@
 			padding: 16px 20px;
 			border: none;
 			cursor: pointer;
-			width: 100%;
+			/* width: 100%; */
 			opacity: 0.9;
 			}
 
 			.btn:hover {
 			opacity: 1;
-			}
+		}
+	.bid {
+		width:2cm;
+	}
 	</style>
 
 	

@@ -4,8 +4,8 @@
 {% load bootstrap4 %}
 {% block  content %}
     <div class="col-md-3"></div>
-    <div class="bg-img col-md-8">
-        <form method="post" action="{% url 'login' %}" class="login_form" >
+    <div class="bg-img col-md-8" >
+        <form method="post" action="{% url 'login' %}" class="login_form" style="margin-left:150px;" >
             {% csrf_token %}
           
           <center><h1>Login</h1></center>
@@ -16,7 +16,7 @@
           <label for="password"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="password" class="password" required>
       
-          <button type="submit" class="btn">Login</button>
+          <button type="submit" class="btn" style="font-size:20px;font-weight: bold;">Login</button>
         </form>
     </div>
       
@@ -24,14 +24,15 @@
         body, html {
         height: 100%;
         background-color:transparent;
+        background-image: linear-gradient(-90deg, red, rgb(12, 255, 251));
         }
 
         * {
           box-sizing: border-box;
         }
         form {
-          width: 50%; 
-          background-image: url("ladyphone.jpg");
+          width: 45%; 
+         background-image: url("ladyphone.jpg");
         }
 
         .bg-img {

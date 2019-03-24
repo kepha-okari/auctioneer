@@ -76,7 +76,7 @@ def user_logout(request):
 def signup(request):
     if request.method == 'POST':
         username = request.POST['username']
-        email_ = request.POST['emailaddress']
+        email_ = request.POST['email']
         password_ = request.POST['password']
         user =User.objects.create_user(username, email_, password_)
         user.first_name = username.upper()
