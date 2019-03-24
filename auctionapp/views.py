@@ -26,8 +26,11 @@ def index(request):
     categories = Category.get_categories
     
     posts = Artifact.objects.all()
+    if len(posts) >= 3:
+        s1, s2, s3 = posts[0], posts[1], posts[2]
+    else:s1, s2, s3 = posts[0], posts[1], posts[0]
 
-    return render(request, 'index.html', {"profile":profile , "posts":posts, "current_user":request.user, "categories":categories })
+    return render(request, 'index.html', {"profile":profile , "posts":posts, "current_user":request.user, "categories":categories, "s1":s1, "s2":s2, "s3":s3 })
 
 def search_results(request):
     categories = Category.get_categories

@@ -14,12 +14,12 @@
 
 	{% block content %}
 
-	    <!-- slidesho images that cover entire screen -->
-		<div class="col-12 landing-page" style="height:90vh;">
+	    <!-- slideshow images that cover entire screen -->
+		<div class="col-12 landing-page" style="height:100vh;">
 		
 				<div class="crossfade">
 						<figure></figure>
-						<figure></figure>
+						<figure><button></button></figure>
 						<figure></figure>
 				</div>
 
@@ -29,6 +29,7 @@
 				.crossfade > figure {
 					animation: imageAnimation 30s linear infinite 0s;
 					backface-visibility: hidden;
+					overflow: hidden; 
 					background-size: cover;
 					background-position: center center;
 					background-repeat: none;

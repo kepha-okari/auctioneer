@@ -9,29 +9,81 @@
 
     <div class="container">
 
-        <div class="col-md-8 col-lg-8">
-            <p>{{artifact.name}}</p>
-            <img src="{{artifact.image.url}}" style="height:500px; width:800px; margin:10px" class="img-responsive" ><br>
+                <div class="container_image">
+                    <img src="{{artifact.image.url}}" alt="{{artifact.name}}" class="image">
+                    <div class="middle">
+                        <div class="text">John Doe</div>
+                    </div>
+                </div>
+
+                
+
+                
+
+    <!--             
+        <img src="{{artifact.image.url}}" style="height:500px; width:800px; margin:10px" class="img-responsive" ><br>
 
             <form action="/comment/{{artifact.id}}/" method="post">
                 {% csrf_token %}
                 <input name="comment" type="text" placeholder="write your thought here">
                 <input type="submit" value="Comment" name="submit"  class="btn btn-success">
             </form>
-     <!--        <textarea rows="2" cols="20" name="comment" form="usrform" placeholder="Enter text here...">
-            </textarea> -->
-        </div>
+  
 
 		<div class="col-md-4 col-lg-4">
             <form action="/place/bid/{{artifact.id}}/" method="post">
-            <!-- <form method="post" action="{% url 'place_bid' artifact.id %}"> -->
                 {% csrf_token %}
                 <input name="bid_price" type="text" placeholder="Kshs">
                 <input type="submit" value="Place Bid" name="submit"  class="btn btn-success">
             </form>
-        </div>
+        </div> 
+    -->
 
-	</div>
+    </div>
+    <style>
 
+    .container_image {
+        position: relative;
+        width: 50%;
+        height: 25%;
+        /* float: left; */
+      }
+      
+      .image {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: 50%;
+        transition: .5s ease;
+        backface-visibility: hidden;
+      }
+      
+      .middle {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+      }
+      
+      .container_image:hover .image {
+        opacity: 0.3;
+      }
+      
+      .container_image:hover .middle {
+        opacity: 1;
+      }
+      
+      .text {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 16px;
+        padding: 16px 32px;
+      }
+      </style>
+    
 </body>
 </html>
