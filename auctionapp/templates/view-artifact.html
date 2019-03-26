@@ -1,5 +1,4 @@
-{% load bootstrap4 %}
-{% load static%}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,27 +6,55 @@
 </head>
 <body>
 
+
+
+    {% load bootstrap4 %}
+    
+    {% load static%}
+    
     <div class="container">
+        <div class="row">
 
-        <div class="container_image">
-            <img src="{{artifact.image.url}}" alt="{{artifact.name}}" class="image" style="height:500px; width:800px; margin:10px">
-            <div class="middle">
-                <div class="text">
-                    <form action="/place/bid/{{artifact.id}}/" method="post">
-                        {% csrf_token %}
-                        <input name="bid_price" type="text" placeholder="Kshs">
-                        <input type="submit" value="Place Bid" name="submit"  class="btn btn-success">
-                    </form>
-                </div>
+              <div class="container_image "  style="width: 50%; float:left;overflow:hidden" >
+                <p style="margin:30px; color:aqua;">
+                  {% if profile %}
+                    <img src="{{profile.profile_pic.url}}" style="height:35px; width:35px; border-radius: 50%;border-color:red;">
+                  {% endif %}
+                  
+                  {{artifact.user|upper}}</p>
+                  
+                  <img src="{{artifact.image.url}}" alt="{{artifact.name}}" class="image" style="height:500px; width:800px; margin:30px">
+                  <div class="middle">
+                      <div class="text">
+                          <form action="/place/bid/{{artifact.id}}/" method="post">
+                              {% csrf_token %}
+                              <input name="bid_price" type="text" placeholder="Kshs">
+                              <input type="submit" value="Place Bid" name="submit"  class="btn btn-success">
+                          </form>
+                          
+                      </div>
+                      
+                  </div>
+      
+
+                  <form action="/comment/{{artifact.id}}/" method="post">
+                      {% csrf_token %}
+                      <input name="comment" type="text" placeholder="write your thought here" style="width:60%; border-radius: 20px; margin-left:30px;">
+                      <input type="submit" value="Comment" name="submit"  class="btn btn-success btn-bid" style="width:20%; margin-left:15px;">
+                  </form>
+            </div>  
+            <div class="container_image" align="left" style="width: 50%; float:left" >
+              <h2 style="margin-top: 3cm; color:aqua;" align="left"> <span class="badge">{{comments|length}}</span> Comments</h2>
+              <div class="well">
+                {% for comment in comments %}
+                  
+                  <p><span style="color:aqua; margin-right: 20px">{{comment.posted_by|title }} </span>  {{ comment.comment}}</p>
+                {% endfor %}
             </div>
-        </div>
-                
 
-        <form action="/comment/{{artifact.id}}/" method="post">
-            {% csrf_token %}
-            <input name="comment" type="text" placeholder="write your thought here">
-            <input type="submit" value="Comment" name="submit"  class="btn btn-success">
-        </form>
+            </div>     
+        </div>
+
 
    
 
@@ -75,9 +102,9 @@
       }
 
       input[type=text], bid_price  {
-          width: 70%;
+          width: 50%;
           padding: 15px;
-          margin: 5px 0 22px 0;
+          margin: 5px 0 22px 0px;
           border-color: #0cfffb;
           border-radius:5%;
           background: #ffff
@@ -90,14 +117,13 @@
         padding: 15px 15px;
         border: none;
         cursor: pointer;
-        width: 70%;
+        width: 50%;
         opacity: 0.9;
-      }
+      } 
 
       .btn:hover {
         opacity: 1;
       }
       </style>
-    
 </body>
 </html>

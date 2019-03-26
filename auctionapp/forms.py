@@ -13,9 +13,9 @@ class ArtifactPostForm(forms.ModelForm):
     description = forms.CharField(max_length = 10)
     image = forms.ImageField(label='Select a file', help_text='max. 20 megabytes')
 
-    # class Meta:
-    #     model = Artifact
-    #     fields = ['name','description', 'image']
+    class Meta:
+        model = Artifact
+        fields = ['name','description', 'image']
 
 
 class UserForm(forms.ModelForm):

@@ -15,7 +15,7 @@
 	{% block content %}
 
 	    <!-- slidesho images that cover entire screen -->
-		<div class="col-12 landing-page" style="height:90vh;">
+		<div class="col-12 landing-page" style="height:100vh;">
 		
 				<div class="crossfade">
 						<figure></figure>
@@ -23,9 +23,9 @@
 						<figure></figure>
 				</div>
 
-				<div class="bg-text">CRAFTSMAN KENYA
-					<!-- <button type="button" class="btn btn-success more" style="width:2cm;">More</button> -->
-				</div>
+				<a href="#images-section">
+					<div class="bg-text">CRAFTSMAN KENYA</div>
+				</a>
 					
 			<style>
 				.crossfade > figure {
@@ -87,6 +87,7 @@
 						font-weight: bold;
 						font-size: 40px;
 						border: 10px solid #0cfffb;
+						border-radius:30px;
 						position: absolute; 
 						top: 50%;
 						left: 50%;
@@ -97,61 +98,87 @@
 						text-align: center;
 					}
 			</style>
-
 		</div>
 
 
-		{% if categories %}
-		<div col-md-4>  
-				<span class="dropdown">
-					<button class="dropbtn">Category 
-					<i class="fa fa-caret-down"></i>
-					</button>
-					<div class="dropdown-content">
-						{% for category in categories %}
-						<a href="{% url 'list_by_category' category.id %}">{{category}}</a>
-						{% endfor %}
-					</div>
-				</span> 
+<!-- the lower page -->
+<hr style="color:aqua;font:bold">
+<div class="container-fluid" id="images-section" style="margin-top:10px;left: 50%;">
+	
+		<div class="row"  style="left:50%; background-color: aqua;">
+			{% if categories %}
+				<div class="col-md-12" style="padding:50px;margin-bottom: 3cm;">  
+						<span class="dropdown">
+							<button class="dropbtn">
+								<span style="font-size: 30px">	Category</span>
+							 
+							<i class="fa fa-caret-down"></i>
+							</button>
+							<div class="dropdown-content">
+								{% for category in categories %}
+								<a href="{% url 'list_by_category' category.id %}">{{category}}</a>
+								{% endfor %}
+							</div>
+						</span> 
 
+				</div>
+			{% endif %}
 		</div>
-		{% endif %}
 
-		<div class="col-12" style="margin-top:10px;">
-			<div class="col-md-6"></div>
+
+
+
+
+
+		<div class="row" >
 			<ul>
 			{% for post in posts %}
 				<li>
-					<div col-md-6>
-					    <span style="background-color:pink; opacity:10%; height=40px; width:40;">
-							
-						
-							<div class="col-md-6">
-								<p>{{ post.name }}</p>
-								<a href="{% url 'view_artifact' post.id %}">
-										<button type="button" class="btn btn-success " style="width:2cm;">Bid</button>
+						<div class="col-md-8 warning" style="float:right; border:aqua; margin-right:6cm; margin-bottom:2cm; ">
+								<img src="{{post.image.url}}" class="responsive"  style="height:600px; width:1000px; margin:20px; margin:20px;"><br>
+
+								<p style="float:left; margin-left:20px; font-size: 25px;">
+									<span>{{ post.name|title }}</span>
+								</p>
+
+								<a href="{% url 'view_artifact' post.id %}" style="float:right; margin-right:100px;">
+										<button type="button" class="btn btn-success " style="width:4cm;">Bid</button>
 								</a>
-							</div>
-
-							<div class="col-md-6">
-								<a href="{% url 'view_artifact' post.id %}">
-										<img src="{{post.image.url}}"  style="height:200px; width:400px; margin-left:10px;border-radius: 10%; margin:20px;"><br>
-									</a>
-							</div>
-			
-					    </span>
-					</div>
+						</div>
+						<hr style="color:aqua;font:bold">
 				</li>
-
 			{% endfor %}
 			</ul>
 		</div>
+
+	</div>
+</div>
+
 
 	{% endblock %}
 
 
 
+
 	<style>
+
+		.category-text {
+			background-color: rgb(0,0,0); /* Fallback color */
+			background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+			color: white;
+			font-weight: bold;
+			font-size: 40px;
+			border: 10px solid #0cfffb;
+			border-radius:30px;
+			position: absolute; 
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 2;
+			width: 400px;
+			padding: 20px;
+			text-align: center;
+		}
 	/* Set a style for the submit button */
 	.btn {
 			background-color:#0cfffb;

@@ -58,19 +58,12 @@ def list_by_category(request, category_id):
 
 
 def view_artifact(request, artifact_id):
-    '''
-    view the details of a single artifact
-    '''
+	'''
+		view the details of a single artifact
+	'''
+	artifact = Artifact.single_artifact(artifact_id)
 
-    artifact = Artifact.single_artifact(artifact_id)
-
-    profile = UserProfile.objects.get(user=artifact.user.id)
-
-
-    comments = Comment.objects.filter(artifact = artifact_id)
-
-
-    return render(request, 'view-artifact.html', {"artifact":artifact, "comments":comments, "profile":profile})
+	return render(request, 'view-artifact.html', {"artifact":artifact})
 
 
 @login_required
@@ -121,6 +114,31 @@ def user_login(request):
             return HttpResponse("Invalid login details given")
     else:
         return render(request, 'registration/login.html', {})
+
+# @login_required(login_url='/login')
+# def post_artifact(request):
+#     '''
+#     View function to display a form for creating a post to a authenticated user
+#     '''
+#     # current_user = request.user
+#     posts = Artifact.objects.all()
+
+#     if request.method == 'POST':
+
+#         name = request.POST['imageName']
+#         description = request.POST['description']
+#         myfile = request.POST['imageFile']
+#         price = request.POST['price']
+#         # myfile = request.FILES['myfile']
+#         fs = FileSystemStorage()
+#         filename = fs.save(myfile, myfile)
+#         uploaded_file_url = fs.url(filename)
+
+#         form, created = Artifact.objects.get_or_create(name=name, description=description, image=uploaded_file_url, price=price)
+#         form.save()
+#         # send_message()
+#         return redirect(index)
+#     return render(request, 'post-artifact.html', {"posts":posts})
 
 
 @login_required(login_url='/login')
